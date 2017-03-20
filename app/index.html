@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <title>20scoopsSmartHome</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://netpie.io/microgear.js"></script>
+    <script>
+      const APPKEY    = "9m6JZvFwYd42YWR";
+      const APPSECRET = "tRH075AnfqAi6Z2XY62TyDyjZ";
+      const APPID     = "20scoopsSmartHome";
+
+        var microgear = Microgear.create({
+            gearkey: APPKEY,
+            gearsecret: APPSECRET
+        });
+
+        microgear.on('message',function(topic,msg) {
+          if(topic.includes("/temp")) {
+            tempChart.data.datasets[0].data[0] = msg;
+            tempChart.update();
+          } else {
+            humidChart.data.datasets[0].data[0] = msg;
+            humidChart.update();
+          }
+            console.log(topic,msg);
+        });
+
+        microgear.subscribe("/gearname/campus_temperature/temp");
+        microgear.subscribe("/gearname/campus_temperature/humid");
+        microgear.connect(APPID);
+    </script>
+</head>
+
+<body>
+<div class="row">
+<div class="col-md-6">
+  <canvas id="tempChart" width="1240" height="620" style="display: block; height: 310px; width: 100%;"></canvas>
+
+</div>
+<div class="col-md-6">
+    <canvas id="humidChart" width="1240" height="620" style="display: block; height: 310px; width: 100%;"></canvas>
+</div>
+</div>
+
+
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+  <script>
+
+          var tempCtx = document.getElementById("tempChart");
+          var humidCtx = document.getElementById("humidChart");
+      var tempChart = new Chart(tempCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Temperature"],
+            datasets: [{
+              data: [0, 100],
+              backgroundColor: [
+                  "#36A2EB"
+              ],
+              hoverBackgroundColor: [
+                  "#36A2EB"
+              ]
+          }]
+        },
+        options: {
+          animation:{
+              animateScale:true,
+          }
+        }
+      });
+
+      var humidChart = new Chart(humidCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Humidity"],
+            datasets: [{
+              data: [0, 100],
+              backgroundColor: [
+                  "#4BC0C0"
+              ],
+              hoverBackgroundColor: [
+                  "#4BC0C0"
+              ]
+          }]
+        },
+        options: {
+          animation:{
+              animateScale:true,
+          }
+        }
+      });
+  </script>
+</body>
+
+</html>
