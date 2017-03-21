@@ -73,21 +73,17 @@
             animateScale:true,
         },
         tooltips: {
-          custom: function(tooltip) {
-            //tooltip.x = 0;
-            //tooltip.y = 0;
-          },
-        mode: 'single',
-        callbacks: {
-          label: function(tooltipItems, data) {
-            if(data.datasets[0].data[tooltipItems.index] == 100)
-              return "campus_temperature"
-              return " " + data.datasets[0].data[tooltipItems.index] + ' celcius';
+          mode: 'single',
+          callbacks: {
+            label: function(tooltipItems, data) {
+              if(data.datasets[0].data[tooltipItems.index] == 100)
+                return "campus_temperature"
+                return " " + data.datasets[0].data[tooltipItems.index] + ' celcius';
+                }
               }
             }
           }
-      }
-    });
+        });
 
     var humidChart = new Chart(humidCtx, {
       type: 'doughnut',
@@ -108,20 +104,16 @@
             animateScale:true,
         },
       tooltips: {
-        custom: function(tooltip) {
-          //tooltip.x = 0;
-          //tooltip.y = 0;
-        },
-      mode: 'single',
-      callbacks: {
-        label: function(tooltipItems, data) {
-          if(data.datasets[0].data[tooltipItems.index] == 100)
-            return "campus_humidity"
-            return " " + data.datasets[0].data[tooltipItems.index] + ' %RH';
+        mode: 'single',
+        callbacks: {
+          label: function(tooltipItems, data) {
+            if(data.datasets[0].data[tooltipItems.index] == 100)
+              return "campus_humidity"
+              return " " + data.datasets[0].data[tooltipItems.index] + ' %RH';
+              }
             }
           }
         }
-      }
     });
   </script>
 </body>
